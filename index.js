@@ -35,7 +35,13 @@ app.get("/package", async(req, res) => {
     res.status(200).json({hrefLink})
   }) 
   
-
+app.get("/", (req, res) => {
+    res.setHeader("Cache-Control", "public,max-age=0");
+    res.status(200).json({
+        status: 'success',
+        author: 'vijay'
+    })
+})
 
 app.listen(port, function(){
     console.log("Your App Running on", port);
