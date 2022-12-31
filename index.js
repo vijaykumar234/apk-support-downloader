@@ -13,8 +13,13 @@ process.setMaxListeners(Infinity);
 
 
 app.get("/package", async(req, res) => {
+   
     const name = req.query.name
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        headless: false,
+        args: ["--disable-setuid-sandbox"],
+        'ignoreHTTPSErrors': true
+    });
     const page = await browser.newPage();
 
     await page.goto("https://apk.support/download-app/" + name)
@@ -35,13 +40,15 @@ app.get("/package", async(req, res) => {
     res.status(200).json({hrefLink})
   }) 
   
-app.get("/", (req, res) => {
+
+  app.get("/", (req, res) => {
     res.setHeader("Cache-Control", "public,max-age=0");
     res.status(200).json({
-        status: 'success',
-        author: 'vijay'
+        status: 'ok',
+        webSite: 'apk-downloader'
     })
 })
+
 
 app.listen(port, function(){
     console.log("Your App Running on", port);
