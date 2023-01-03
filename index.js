@@ -16,7 +16,7 @@ app.get("/package", async(req, res) => {
    
     const name = req.query.name
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         args: ["--disable-setuid-sandbox"],
         'ignoreHTTPSErrors': true
     });
